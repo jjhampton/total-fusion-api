@@ -3,24 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TotalFusionApi.Models;
+using Raven.Client.Documents;
+
 
 namespace TotalFusionApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class MenuItemsController : Controller
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        // public IEnumerable<MenuItem> Get()
+        // {
+
+        // }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public MenuItem Get(int id)
         {
-            return "value";
+            IDocumentStore store = DocumentStoreHolder.Store;
+
+            var session = store.OpenSession();
+            var result = session.Load<MenuItem>($"products/{id}");
+            
+            return result;
         }
 
         // POST api/values
