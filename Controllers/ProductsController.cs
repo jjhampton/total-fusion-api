@@ -10,16 +10,16 @@ using Raven.Client.Documents;
 namespace TotalFusionApi.Controllers
 {
     [Route("api/[controller]")]
-    public class MenuItemsController : Controller
+    public class ProductsController : Controller
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<MenuItem> Get()
+        public IEnumerable<Product> Get()
         {
             IDocumentStore store = DocumentStoreHolder.Store;
 
             var session = store.OpenSession();
-            var results = session.Advanced.LoadStartingWith<MenuItem>("products/");
+            var results = session.Advanced.LoadStartingWith<Product>("products/");
 
             return results;
 
@@ -27,12 +27,12 @@ namespace TotalFusionApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public MenuItem Get(int id)
+        public Product Get(string id)
         {
             IDocumentStore store = DocumentStoreHolder.Store;
 
             var session = store.OpenSession();
-            var result = session.Load<MenuItem>($"products/{id}");
+            Product result = session.Load<Product>($"products/{id}");
             
             return result;
         }
