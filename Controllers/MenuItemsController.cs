@@ -14,10 +14,16 @@ namespace TotalFusionApi.Controllers
     {
         // GET api/values
         [HttpGet]
-        // public IEnumerable<MenuItem> Get()
-        // {
+        public IEnumerable<MenuItem> Get()
+        {
+            IDocumentStore store = DocumentStoreHolder.Store;
 
-        // }
+            var session = store.OpenSession();
+            var results = session.Advanced.LoadStartingWith<MenuItem>("products/");
+
+            return results;
+
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]
